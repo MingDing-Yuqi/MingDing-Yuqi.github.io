@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ming Ding</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --paper: #f0ede6;
+  --yellow: #e9d84a;
+  --red: #e03e2d;
+  --muted: #666;
+  --subtle: #222;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--paper); min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 4rem;
+  background: var(--bg);
+  border-bottom: 1px solid #161616;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; letter-spacing: 0.12em; font-weight: 400;
+  color: var(--paper); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color 0.2s;
+  background: none; border: none; cursor: pointer; padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+.nav-links a:hover { color: var(--paper); }
+.nav-links a.active { color: var(--yellow); }
+.nav-links a.disabled { opacity: 0.2; pointer-events: none; cursor: default; }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; }
+.page.visible { display: flex; }
+
+/* ── HOME ── */
+#page-home {
+  align-items: center;
+  padding: 7rem 4rem 4rem;
+  max-width: 1080px;
+  margin: 0 auto;
+  gap: 6rem;
+  width: 100%;
+}
+
+.photo-wrap {
+  flex-shrink: 0;
+  width: 280px; height: 360px;
+  position: relative;
+}
+.photo-shadow {
+  position: absolute;
+  top: 12px; left: 12px;
+  width: 280px; height: 360px;
+  background: var(--red);
+  z-index: 0;
+}
+.photo-box {
+  position: absolute; inset: 0;
+  background: var(--yellow);
+  z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.6rem;
+  overflow: hidden;
+}
+/* Replace the placeholder with your photo:
+   <img src="photo.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"> */
+.photo-box svg { opacity: 0.2; color: #0a0a0a; }
+.photo-box span {
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #0a0a0a; opacity: 0.35;
+}
+
+.home-text { flex: 1; }
+
+.home-label {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: 1.2rem; font-weight: 400;
+}
+.home-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700; line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+.home-name .first {
+  display: block;
+  font-size: clamp(3.5rem, 5.5vw, 5.2rem);
+  color: var(--paper);
+  font-style: normal;
+}
+.home-name .last {
+  display: block;
+  font-size: clamp(3.5rem, 5.5vw, 5.2rem);
+  color: var(--yellow);
+  font-style: italic;
+}
+
+.home-bio {
+  font-size: 0.88rem; line-height: 1.9; font-weight: 300;
+  color: #777; max-width: 440px; margin-bottom: 2rem;
+}
+.home-bio strong { color: var(--paper); font-weight: 400; }
+
+.home-meta {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--red);
+  margin-bottom: 2.5rem;
+}
+.meta-row { font-size: 11px; letter-spacing: 0.05em; color: #555; font-weight: 300; }
+.meta-row strong { color: #aaa; font-weight: 400; }
+
+.home-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.btn-yellow {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--yellow); color: #0a0a0a;
+  padding: 0.8rem 2rem; text-decoration: none; font-weight: 500;
+  transition: background 0.2s; display: inline-block; border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+.btn-yellow:hover { background: #f2e44f; }
+.btn-outline {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #444; border: 1px solid #222;
+  padding: 0.8rem 2rem; text-decoration: none; font-weight: 400;
+  display: inline-block; opacity: 0.4; cursor: not-allowed; pointer-events: none;
+}
+
+/* ── RESEARCH ── */
+#page-research {
+  flex-direction: column;
+  padding: 8rem 4rem 6rem;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.research-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 700; line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+  color: var(--paper);
+}
+.research-heading em { font-style: italic; color: var(--yellow); }
+
+.papers { display: flex; flex-direction: column; }
+
+.paper {
+  padding: 2.2rem 0;
+  border-top: 1px solid #1a1a1a;
+}
+.paper:last-child { border-bottom: 1px solid #1a1a1a; }
+
+.paper-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 2rem;
+  margin-bottom: 0.55rem;
+}
+.paper-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 400; line-height: 1.3;
+  color: var(--paper);
+}
+.badges { display: flex; gap: 0.4rem; flex-wrap: wrap; flex-shrink: 0; padding-top: 0.15rem; }
+.badge {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 8px; font-weight: 400; white-space: nowrap;
+}
+.b-jmp { background: var(--yellow); color: #0a0a0a; }
+.b-rr  { color: #7a9fdf; border: 1px solid #1e3060; }
+.b-acc { color: #60c085; border: 1px solid #1a4d30; }
+.b-wip { color: #555; border: 1px solid #222; }
+
+.paper-authors {
+  font-size: 11px; color: #555; letter-spacing: 0.04em;
+  margin-bottom: 0.7rem; font-weight: 300;
+}
+.paper-authors em { color: #777; font-style: normal; }
+
+.paper-desc {
+  font-size: 0.85rem; line-height: 1.8; color: #666;
+  font-weight: 300; max-width: 660px; margin-bottom: 0.75rem;
+}
+.venues { display: flex; flex-wrap: wrap; gap: 0 1.2rem; }
+.venue {
+  font-size: 10px; letter-spacing: 0.07em; color: #444; font-weight: 300;
+}
+.venue::before { content: '— '; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="show('home');return false;">Ming Ding</a>
+  <div class="nav-links">
+    <a id="nav-home" class="active" onclick="show('home');return false;">Home</a>
+    <a id="nav-research" onclick="show('research');return false;">Research</a>
+    <a class="disabled">CV</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page visible" id="page-home">
+  <div class="photo-wrap">
+    <div class="photo-shadow"></div>
+    <div class="photo-box">
+      <!-- TO ADD YOUR PHOTO: replace everything inside .photo-box with:
+           <img src="photo.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"> -->
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span>Your photo here</span>
+    </div>
+  </div>
+
+  <div class="home-text">
+    <p class="home-label">Ph.D. Candidate · Marketing</p>
+    <h1 class="home-name">
+      <span class="first">Ming</span>
+      <span class="last">Ding</span>
+    </h1>
+    <p class="home-bio">
+      Ph.D. candidate at <strong>IESE Business School</strong>, Barcelona,
+      and Visiting Scholar at the <strong>University of Maryland</strong>
+      (Smith School). I study pricing and consumer decisions in digital
+      and AI-mediated platforms — combining large-scale observational
+      data with field and lab experiments.
+    </p>
+    <div class="home-meta">
+      <div class="meta-row"><strong>IESE Business School</strong> — Barcelona, Spain</div>
+      <div class="meta-row">Visiting Scholar, University of Maryland · 2025–2026</div>
+      <div class="meta-row">MDing@iese.edu</div>
+    </div>
+    <div class="home-actions">
+      <button class="btn-yellow" onclick="show('research')">View Research</button>
+      <!-- TO ENABLE CV: change the line below to: <a class="btn-yellow" href="cv.pdf" target="_blank">Download CV</a> -->
+      <a class="btn-outline">Download CV</a>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div class="page" id="page-research">
+  <h2 class="research-heading">Research &amp;<br><em>Working Papers</em></h2>
+
+  <div class="papers">
+    <div class="paper">
+      <div class="paper-top">
+        <h3 class="paper-title">Price Concentration</h3>
+        <div class="badges">
+          <span class="badge b-jmp">Job Market Paper</span>
+          <span class="badge b-rr">R&amp;R · JMR</span>
+        </div>
+      </div>
+      <p class="paper-authors">with <em>Diego Aparicio</em>, Elena Reutskaja, and Thomas K. Reutterer</p>
+      <p class="paper-desc">Examines how the concentration of prices within an assortment shapes consumer choice, combining large-scale secondary data with controlled laboratory experiments.</p>
+      <div class="venues">
+        <span class="venue">Journal of Marketing Research</span>
+        <span class="venue">Mediterranean Symposium 2025</span>
+        <span class="venue">EMAC Doctoral Colloquium 2025</span>
+      </div>
+    </div>
+
+    <div class="paper">
+      <div class="paper-top">
+        <h3 class="paper-title">The Relational Value of Unexpected Gifts on Online Platforms</h3>
+        <div class="badges"><span class="badge b-acc">Accepted</span></div>
+      </div>
+      <p class="paper-authors">with <em>Diego Aparicio</em> and Michael Tsiros</p>
+      <p class="paper-desc">A field study using data from an online grocery platform to identify how unexpected rewards influence customer retention and relationship quality.</p>
+      <div class="venues">
+        <span class="venue">EMAC 2026</span>
+        <span class="venue">ISMS 2026</span>
+      </div>
+    </div>
+
+    <div class="paper">
+      <div class="paper-top">
+        <h3 class="paper-title">Price Dispersion and Consumer Purchase</h3>
+        <div class="badges"><span class="badge b-wip">Working Paper</span></div>
+      </div>
+      <p class="paper-authors">with <em>Diego Aparicio</em> and P.K. Kannan</p>
+      <p class="paper-desc">Leverages large-scale transaction data from an online platform to study how price dispersion shapes consumer purchase decisions.</p>
+    </div>
+
+    <div class="paper">
+      <div class="paper-top">
+        <h3 class="paper-title">Pricing in AI-mediated Marketplaces</h3>
+        <div class="badges"><span class="badge b-wip">In Progress</span></div>
+      </div>
+      <p class="paper-authors"><em>Ming Ding</em></p>
+      <p class="paper-desc">An ongoing investigation into how AI intermediaries alter pricing dynamics and consumer decision-making in digital markets.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(name) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('visible');
+    p.style.display = 'none';
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const pg = document.getElementById('page-' + name);
+  pg.classList.add('visible');
+  pg.style.display = 'flex';
+  document.getElementById('nav-' + name).classList.add('active');
+}
+</script>
+</body>
+</html>
